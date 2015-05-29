@@ -1,26 +1,40 @@
 'use strict';
 
 // Projects controller
-angular.module('projects').controller('ProjectsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Projects',
-	function($scope, $stateParams, $location, Authentication, Projects) {
+angular.module('projects').controller('ProjectsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Projects', 'projectsObj',
+	function($scope, $stateParams, $location, Authentication, Projects, projectsObj) {
 		$scope.authentication = Authentication;
 
 		// Create new Project
 		$scope.create = function() {
-			// Create new Project object
-			var project = new Projects ({
-				name: this.name
+			var project = new Projects({
+				name: this.name,
+				description: this.description
 			});
 
-			// Redirect after save
-			project.$save(function(response) {
-				$location.path('projects/' + response._id);
+			console.log(project);
 
-				// Clear form fields
-				$scope.name = '';
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
+			projectsObj.create(project)
+				.then(function(result) {
+					return;
+				}, function(reason) {
+					$scope.error = reason;
+				});
+		};
+
+		// Update existing Project
+		$scope.update = function() {
+			var project = $scope.project;
+			console.log('here');
+			console.log(project);
+
+
+			projectsObj.update($scope.project)
+				.then(function(result) {
+					return;
+				}, function(reason) {
+					$scope.error = reason;
+				});
 		};
 
 		// Remove existing Project
@@ -38,17 +52,6 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 					$location.path('projects');
 				});
 			}
-		};
-
-		// Update existing Project
-		$scope.update = function() {
-			var project = $scope.project;
-
-			project.$update(function() {
-				$location.path('projects/' + project._id);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
 		};
 
 		// Find a list of Projects
