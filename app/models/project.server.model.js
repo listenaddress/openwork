@@ -20,6 +20,10 @@ var ProjectSchema = new Schema({
 		type: String,
 		required: 'Please fill Project description'
 	},
+	contributors: {
+		type: String,
+		required: 'Please fill contributors'
+	},
 	created: {
 		type: Date,
 		default: Date.now

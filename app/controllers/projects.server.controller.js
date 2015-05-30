@@ -31,6 +31,11 @@ exports.create = function(req, res) {
  */
 exports.read = function(req, res) {
 	res.jsonp(req.project);
+	console.log(req.cookies);
+	console.log("##############");
+	console.log(res.req);
+
+
 };
 
 /**
@@ -72,7 +77,7 @@ exports.delete = function(req, res) {
 /**
  * List of Projects
  */
-exports.list = function(req, res) { 
+exports.list = function(req, res) {
 	Project.find().sort('-created').populate('user', 'displayName').exec(function(err, projects) {
 		if (err) {
 			return res.status(400).send({
@@ -87,7 +92,7 @@ exports.list = function(req, res) {
 /**
  * Project middleware
  */
-exports.projectByID = function(req, res, next, id) { 
+exports.projectByID = function(req, res, next, id) {
 	Project.findById(id).populate('user', 'displayName').exec(function(err, project) {
 		if (err) return next(err);
 		if (! project) return next(new Error('Failed to load Project ' + id));
