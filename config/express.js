@@ -26,6 +26,7 @@ var fs = require('fs'),
 module.exports = function(db) {
 	// Initialize express app
 	var app = express();
+	var server = require('http').createServer(app);
 
 	// Globbing model files
 	config.getGlobbedFiles('./app/models/**/*.js').forEach(function(modelPath) {
@@ -158,6 +159,20 @@ module.exports = function(db) {
 		return httpsServer;
 	}
 
+	// Socket.io controls 
+	var io = require('socket.io').listen(server);
+	var mongoose = require('mongoose');
+	// var socketData = mongoose.model('Socket');
+	// var socketCtrl = require('../app/controllers/sockets.server.controller.js');
+
+	console.log('yo');
+	io.on('connection', function(socket) {
+		console.log('in connection');
+		var socketID = socket.id;
+		io.to(socketID).emit('socketCon', socketID);
+	});
+
+
 	// Return Express server instance
-	return app;
+	return server;
 };

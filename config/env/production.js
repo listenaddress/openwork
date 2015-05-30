@@ -19,7 +19,9 @@ module.exports = {
 				'public/lib/angular-ui-utils/ui-utils.min.js',
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.min.js',
 				'public/lib/moment/min/moment.min.js',
-				'public/lib/angular-moment/angular-moment.min.js'
+				'public/lib/angular-moment/angular-moment.min.js',
+				'public/lib/angular-socket-io/socket.min.js',
+        		'public/lib/socket.io-client/socket.io.js',
 			]
 		},
 		css: 'public/dist/application.min.css',
