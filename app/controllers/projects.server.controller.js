@@ -43,7 +43,7 @@ exports.read = function(req, res) {
  */
 exports.update = function(req, res) {
 	var project = req.project ;
-
+	console.log(req.user);
 	project = _.extend(project , req.body);
 
 	project.save(function(err) {

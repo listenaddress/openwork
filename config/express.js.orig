@@ -160,6 +160,11 @@ module.exports = function(db) {
 		// Return HTTPS server instance
 		return httpsServer;
 	}
+<<<<<<< HEAD
+	// Return Express server instance
+	return app;
+};
+=======
 
 	// Socket.io controls 
 	var io = require('socket.io').listen(server);
@@ -178,3 +183,4 @@ module.exports = function(db) {
 	// Return Express server instance
 	return server;
 };
+>>>>>>> c4a7c21a883e8c37bc53b04412c33302ac359fa9
