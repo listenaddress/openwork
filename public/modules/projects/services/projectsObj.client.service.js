@@ -2,8 +2,8 @@
 
 angular.module('projects')
 
-.factory('projectsObj', ['Projects', '$location', '$q', '$stateParams', 'momentCreator',
-	function(Projects, $location, $q, $stateParams, momentCreator) {
+.factory('projectsObj', ['Projects', '$location', '$q', '$stateParams', 'momentCreator', 'mySocket',
+	function(Projects, $location, $q, $stateParams, momentCreator, mySocket) {
 		var projectsObj = {};
 
 		// Create project
@@ -36,9 +36,12 @@ angular.module('projects')
 			var updatedNote = project.updatedNote;
 			var newNote = project.newNote;
 			var updatedChat = project.updatedChat;
+			var parentComment = project.parentComment;
 
-			project.$update(function() {
-				console.log(project);
+			var testObj = new Projects(project);
+
+			testObj.$update(function() {
+				console.log(testObj);
 				// if (updatedNote) {
 				// 	project.updatedNote = updatedNote;
 				// } else if (newNote) {
@@ -50,8 +53,8 @@ angular.module('projects')
 				// 	console.log(project._id);
 				// 	$location.path('projects/' + project._id);
 				// }
-				$location.path('projects/' + project._id);
-				// mySocket.emit('project updated', project);
+				// $location.path('projects/' + project._id);
+				mySocket.emit('project updated', testObj);
 				updateDefer.resolve();
 			}, function(errorResponse) {
 				updateDefer.reject(errorResponse.data.message);

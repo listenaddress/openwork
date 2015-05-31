@@ -46,7 +46,14 @@ exports.update = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(project);
+			project
+				.populate('user', 'username providerData.profile_image_url_https')
+				.populate('notes.comments.user', 'username providerData.profile_image_url_https')
+				.populate('notes.comments.comments.user', 'username providerData.profile_image_url_https')
+				.populate('comments.user', 'username providerData.profile_image_url_https')
+				.populate('comments.comments.user', 'username providerData.profile_image_url_https', function() {
+					res.jsonp(project);
+				});
 		}
 	});
 };

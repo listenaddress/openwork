@@ -49,11 +49,11 @@
                     <textarea class="commentEdit" ng-model="obj.commentEdit"></textarea>
                     <button ng-click="saveCommentEdit()">save</button>
                     <button ng-click="cancelEdit()">cancel</button>
-                    <button ng-click="removeComment()">delete</button>
+                    <button ng-click="removeNestedComment()">delete</button>
                 </div>
             </div>
             <!-- Nested comment input -->
-            <textarea type="text" class="nestedCommentInput" ng-model="nestedCommentInput"></textarea>  
+            <textarea type="text" class="nestedCommentInput" ng-model="obj.nestedCommentInput"></textarea>  
             <button ng-click="addNestedComment()">add</button>
         </div>
     </div>

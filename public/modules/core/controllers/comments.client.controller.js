@@ -5,6 +5,8 @@ angular.module('core')
 .controller('CommentsController', [ '$scope', 'Authentication', 'projectsObj', 'mySocket', 'Projects', '$stateParams', '$modal',
 	function($scope, Authentication, projectsObj, mySocket, Projects, $stateParams, $modal) {
 		$scope.authentication = Authentication;
+		$scope.commenting = false;
+		$scope.editing = false;
 
 		$scope.toggleCommenting = function() {
 			if (this.obj.commenting) {
@@ -12,6 +14,8 @@ angular.module('core')
 			} else {
 				this.obj.commenting = true;
 				$scope.commenting = this.obj._id;
+				$scope.nestedCommentInput = this.nestedCommentInput;
+				console.log(this.obj.nestedCommentInput);
 			}
 		};
 
@@ -19,7 +23,7 @@ angular.module('core')
 			this.obj.editing = true;
 			this.obj.commentEdit = this.obj.text;
 			$scope.editing = this.obj._id;
-			$scope.commentEdit = this.commentEdit;
+			$scope.commentEdit = this.obj.commentEdit;
 		};
 
 		$scope.addComment = function() {
@@ -49,7 +53,6 @@ angular.module('core')
 					// });
 					project.updatedNote = $stateParams.noteId;
 					projectsObj.update(project);
-					
 				}
 
 			} else {
@@ -76,7 +79,7 @@ angular.module('core')
 
 			var that = this;
 
-			 modalInstance.result.then(function (result) {
+			modalInstance.result.then(function (result) {
 			 	if (result === 'delete') {
 			 		$scope.editing = false;
 			 		var project = $scope.$parent.project;
@@ -95,7 +98,7 @@ angular.module('core')
 						project.updatedChat = true;
 						projectsObj.update(project)
 							.then(function(result) {
-								$scope.$parent.project = result;
+								// $scope.$parent.project = result;
 							});
 					}
 				}
@@ -105,16 +108,20 @@ angular.module('core')
 
 		$scope.addNestedComment = function() {
 			this.obj.comments.push({
-				text: this.nestedCommentInput,
+				text: this.obj.nestedCommentInput,
 				user: Authentication.user._id
 			});
+			var that = this;
 
 			if ($stateParams.noteId) {
 				$scope.project.updatedNote = $scope.$parent.note._id;
 				projectsObj.update($scope.project);
 			} else if ($stateParams.projectId) {
 				$scope.project.updatedChat = true;
-				projectsObj.update($scope.project);
+				projectsObj.update($scope.project)
+					.then(function() {
+						that.obj.nestedCommentInput = '';
+					});
 			}
 		};
 
@@ -126,8 +133,8 @@ angular.module('core')
 			} 
 			projectsObj.update($scope.project)
 				.then(function(result) {
-					$scope.project = result;
-					$scope.$parent.project = result;
+					// $scope.project = result;
+					// $scope.$parent.project = result;
 				});
 		};
 
@@ -147,50 +154,82 @@ angular.module('core')
 			this.obj.editing = false;
 		};
 
-		// mySocket.on('update project', function(data) {
+		mySocket.on('updated project', function(data) {
+			console.log(data);
+			console.log($scope.commenting);
+			var project = new Projects(data);
+
+			// If people are commenting, editing a comment, or viewing nested comments, keep their state.
+			if (($scope.$parent.project) && ($scope.$parent.project._id === data._id)) {
+
+				if ($scope.commenting) {
+					var commenting = project.comments.filter(function(comment) {
+						return $scope.commenting === comment._id;
+					});
+					var scopeComment = $scope.$parent.project.comments.filter(function(comment) {
+						return $scope.commenting === comment._id;
+					});
+					commenting[0].nestedCommentInput = scopeComment[0].nestedCommentInput;
+					commenting[0].commenting = true;
+				}
+
+				$scope.$parent.project = new Projects(data);
+		
+				// angular.forEach($scope.$parent.project.comments, function(comment, val) {
+				// 	comment.userPic = comment.user.providerData.profile_image_url_https;
+				// 	angular.forEach(comment.comments, function(comment, val) {
+				// 		comment.userPic = comment.user.providerData.profile_image_url_https;
+				// 	});
+				// });
+			}
 
 
-		// 	if (($scope.$parent.project) && ($scope.$parent.project._id === data._id)) {
-		// 		$scope.$parent.project = new Projects(data);
-		// 		$scope.project = new Projects(data);
-		// 		angular.forEach($scope.$parent.project.comments, function(comment, val) {
-		// 			comment.userPic = comment.user.providerData.profile_image_url_https;
-		// 			angular.forEach(comment.comments, function(comment, val) {
-		// 				comment.userPic = comment.user.providerData.profile_image_url_https;
-		// 			});
-		// 		});
-		// 	}
+			if ($scope.editing) {
+				console.log($scope.editing);
+				var editingObj = $scope.$parent.project.comments.filter(function(comment) {
+					return $scope.editing === comment._id;
+				});
+				console.log(editingObj[0]);
+				var newEditingObj = project.comments.filter(function(comment) {
+					return $scope.editing === comment._id;
+				});
+				newEditingObj[0].editing = true;
+				console.log(newEditingObj[0]);
+				console.log($scope.commentInput);
+				newEditingObj[0].commentInput = editingObj[0].commentInput;
+			}
 
-		// 	if (($scope.$parent.note) && ($scope.$parent.note._id === data.updatedNote)) {
-		// 		var note = data.notes.filter(function(obj) {
-		// 			return obj._id === data.updatedNote;
-		// 		});
-		// 		if ($scope.commenting) {
-		// 			var commentingObj = note[0].comments.filter(function(comment) {
-		// 				return $scope.commenting === comment._id;
-		// 			});
-		// 			commentingObj[0].commenting = true;
-		// 		}
-		// 		if ($scope.editing) {
-		// 			var editingObj = $scope.$parent.note.comments.filter(function(comment) {
-		// 				return $scope.editing === comment._id;
-		// 			});
-		// 			console.log(editingObj[0]);
-		// 			var newEditingObj = note[0].comments.filter(function(comment) {
-		// 				return $scope.editing === comment._id;
-		// 			});
-		// 			newEditingObj[0].editing = true;
-		// 			newEditingObj[0].commentEdit = editingObj[0].commentEdit;
-		// 		}
-		// 		$scope.$parent.note = note[0];
-		// 		angular.forEach($scope.$parent.note.comments, function(comment, val) {
-		// 			comment.userPic = comment.user.providerData.profile_image_url_https;
-		// 			angular.forEach(comment.comments, function(comment, val) {
-		// 				comment.userPic = comment.user.providerData.profile_image_url_https;
-		// 			});
-		// 		});
-		// 	}
-		// });
+			// if (($scope.$parent.note) && ($scope.$parent.note._id === data.updatedNote)) {
+			// 	console.log('in here too');
+			// 	var note = data.notes.filter(function(obj) {
+			// 		return obj._id === data.updatedNote;
+			// 	});
+			// 	if ($scope.commenting) {
+			// 		var commentingObj = note[0].comments.filter(function(comment) {
+			// 			return $scope.commenting === comment._id;
+			// 		});
+			// 		commentingObj[0].commenting = true;
+			// 	}
+			// 	if ($scope.editing) {
+			// 		var editingObj = $scope.$parent.note.comments.filter(function(comment) {
+			// 			return $scope.editing === comment._id;
+			// 		});
+			// 		console.log(editingObj[0]);
+			// 		var newEditingObj = note[0].comments.filter(function(comment) {
+			// 			return $scope.editing === comment._id;
+			// 		});
+			// 		newEditingObj[0].editing = true;
+			// 		newEditingObj[0].commentEdit = editingObj[0].commentEdit;
+			// 	}
+			// 	$scope.$parent.note = note[0];
+			// 	angular.forEach($scope.$parent.note.comments, function(comment, val) {
+			// 		comment.userPic = comment.user.providerData.profile_image_url_https;
+			// 		angular.forEach(comment.comments, function(comment, val) {
+			// 			comment.userPic = comment.user.providerData.profile_image_url_https;
+			// 		});
+			// 	});
+			// }
+		});
 
 	}
 ]);
