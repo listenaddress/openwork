@@ -1,8 +1,8 @@
 'use strict';
 
 // Projects controller
-angular.module('projects').controller('ProjectsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Projects', 'projectsObj',
-	function($scope, $stateParams, $location, Authentication, Projects, projectsObj) {
+angular.module('projects').controller('ProjectsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Projects', 'projectsObj', 'mySocket',
+	function($scope, $stateParams, $location, Authentication, Projects, projectsObj, mySocket) {
 		$scope.authentication = Authentication;
 
 		// Create new Project
@@ -66,5 +66,11 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 				projectId: $stateParams.projectId
 			});
 		};
+
+		// Socket logic
+		mySocket.on('updated project', function(data) {
+			console.log(data);
+		});
+
 	}
 ]);

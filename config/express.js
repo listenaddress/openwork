@@ -42,7 +42,7 @@ module.exports = function(db) {
 	app.locals.cssFiles = config.getCSSAssets();
 
 	// Passing the request url to environment locals
-	app.use(function(req, res, next) {
+	app.use(function(req, res, next) {///
 		res.locals.url = req.protocol + '://' + req.headers.host + req.url;
 		next();
 	});
@@ -172,6 +172,14 @@ module.exports = function(db) {
 		console.log('in connection');
 		var socketID = socket.id;
 		io.to(socketID).emit('socketCon', socketID);
+
+		socket.on('project updated', function(data) {
+			io.sockets.emit('updated project', data);
+		});
+
+
+
+
 	});
 
 

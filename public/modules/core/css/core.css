@@ -91,3 +91,36 @@
 	margin-left: 5px;
 	width: 80%;
 }
+
+.commentBubble {
+	height: 25px;
+	z-index: 2;
+	position: absolute;
+	right: 0px;
+	top: 23px;
+}
+
+.commentBubble:hover {
+	cursor: pointer;
+}
+
+.commentNumber {
+	font-size: 10px;
+	position: absolute;
+	right: 7px;
+	top: 26px;
+	color: black;
+	font-weight: 300;
+}
+
+.userPicture {
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+}
+
+.smallUserPicture {
+	border-radius: 50%;
+	width: 29px;
+	height: 29px;
+}
