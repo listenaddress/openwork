@@ -5,7 +5,7 @@
         <!-- Comment user picture -->
         <img class="userPicture" ng-src="{{obj.user.providerData.profile_image_url_https}}">
         <!-- Comment user username -->
-        <a href="http://www.twitter.com/{{obj.user}}" target="_blank"> 
+        <a href="http://www.twitter.com/{{obj.user}}" target="_blank">
             <span class="username commentUsername">{{obj.user.username}}</span>
         </a>
         <!-- Comment time -->
@@ -30,10 +30,10 @@
         <div class="commentText" ng-hide="obj.editing">{{obj.text}}</div>
         <!-- Editing comment text -->
         <div ng-show="obj.editing">
-            <textarea class="commentEdit" ng-model="obj.commentEdit"></textarea>
-            <button ng-click="saveCommentEdit()">save</button>
-            <button ng-click="cancelEdit()">cancel</button>
-            <button ng-click="removeComment()">delete</button>
+            <input class=" commentEdit form-control" ng-model="obj.commentEdit"></input>
+            <a class="btn btn-default" class="btn btn-default" ng-click="saveCommentEdit()">save</a>
+            <a class="btn btn-default" class="btn btn-default"ng-click="cancelEdit()">cancel</a>
+            <a class="btn btn-default" ng-click="removeComment()">delete</a>
         </div>
 
         <!-- Nested comments -->
@@ -47,17 +47,17 @@
                 <div class="nestedCommentText" ng-hide="obj.editing">{{obj.text}}</div>
                 <div ng-show="obj.editing">
                     <textarea class="commentEdit" ng-model="obj.commentEdit"></textarea>
-                    <button ng-click="saveCommentEdit()">save</button>
-                    <button ng-click="cancelEdit()">cancel</button>
-                    <button ng-click="removeNestedComment()">delete</button>
+                    <button  class="btn btn-default" ng-click="saveCommentEdit()">save</button>
+                    <button  class="btn btn-default" ng-click="cancelEdit()">cancel</button>
+                    <button  class="btn btn-default" ng-click="removeNestedComment()">delete</button>
                 </div>
             </div>
             <!-- Nested comment input -->
-            <textarea type="text" class="nestedCommentInput" ng-model="obj.nestedCommentInput"></textarea>  
-            <button ng-click="addNestedComment()">add</button>
+            <textarea type="text" class="nestedCommentInput" ng-model="obj.nestedCommentInput"></textarea>
+            <button  class="btn btn-default"  ng-click="addNestedComment()">add</button>
         </div>
     </div>
 
     <input type="text" ng-model="commentInput" />
-    <button ng-click="addComment()">add comment</button>
+    <button  class="btn btn-default"  ng-click="addComment()">add comment</button>
 </div>
