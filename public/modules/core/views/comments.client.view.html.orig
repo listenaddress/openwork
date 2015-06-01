@@ -46,10 +46,19 @@
                 <img class="editButton" src="/modules/core/img/edit.png" ng-if="obj.hovering && authentication.user._id === obj.user._id" ng-hide="obj.editing" ng-click="startEditing()">
                 <div class="nestedCommentText" ng-hide="obj.editing">{{obj.text}}</div>
                 <div ng-show="obj.editing">
+<<<<<<< HEAD
+                    <input class="form-control commentEdit" ng-model="obj.commentEdit">
+                    <div text-angular ng-model="htmlVariable"></div>
+
+                    <button  class="btn btn-default" ng-click="saveCommentEdit()">save</button>
+                    <button  class="btn btn-default" ng-click="cancelEdit()">cancel</button>
+                    <button  class="btn btn-default" ng-click="removeNestedComment()">delete</button>
+=======
                     <textarea class="commentEdit" ng-model="obj.commentEdit"></textarea>
                     <button class="btn btn-default" ng-click="saveCommentEdit()">save</button>
                     <button class="btn btn-default" ng-click="cancelEdit()">cancel</button>
                     <button class="btn btn-default" ng-click="removeNestedComment()">delete</button>
+>>>>>>> 2c104527c07555c9b60797bb635a3fb128f06f7f
                 </div>
             </div>
             <!-- Nested comment input -->

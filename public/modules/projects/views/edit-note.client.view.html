@@ -13,12 +13,18 @@
 	Title
 	<textarea class="form-control" ng-model="note.title" ng-bind="note.title"></textarea><br>
 	Note
-	<textarea class="form-control" ng-model="note.content" ng-bind="note.content"></textarea><br>
+
+	<text-angular ta-toolbar="[['h1','h2','h3'],['bold','italics'],['insertImage', 'insertLink', 'insertVideo']]" ng-model="note.content" model="htmlcontent"></text-angular>
+
+	<br>
+
+
 
 	<!--  Remove note -->
 	<button class="btn btn-default" ng-click="updateNote()">update note</button>
 
 	<!--  Remove note -->
     <button class="btn btn-default" ng-click="openRemoveNoteModal()">remove note</button>
+
 
 </section>

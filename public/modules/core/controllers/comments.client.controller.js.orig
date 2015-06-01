@@ -17,7 +17,6 @@ angular.module('core')
 				this.obj.commenting = true;
 				$scope.commenting = this.obj._id;
 				$scope.nestedCommentInput = this.nestedCommentInput;
-				console.log(this.obj.nestedCommentInput);
 			}
 		};
 
@@ -231,8 +230,19 @@ angular.module('core')
 			// 	commenting[0].commenting = true;
 			// }
 
+<<<<<<< HEAD
+			$scope.$parent.project = new Projects(data);
+			$scope.project = new Projects(data);
+
+			console.log(data);
+	
+||||||| merged common ancestors
+			// $scope.$parent.project = new Projects(data);
+	
+=======
 			// $scope.$parent.project = new Projects(data);
 
+>>>>>>> bc5f666f929ac6c3557ad6a3174c070f1ca506b3
 			// angular.forEach($scope.$parent.project.comments, function(comment, val) {
 			// 	comment.userPic = comment.user.providerData.profile_image_url_https;
 			// 	angular.forEach(comment.comments, function(comment, val) {
