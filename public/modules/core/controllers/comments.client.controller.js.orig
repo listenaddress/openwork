@@ -167,6 +167,28 @@ angular.module('core')
 			if (($scope.$parent.project) && ($scope.$parent.project._id === data._id)) {
 				console.log('looking at a note');
 
+<<<<<<< HEAD
+				if ($scope.commenting) {
+					var commenting = project.comments.filter(function(comment) {
+						return $scope.commenting === comment._id;
+					});
+					var scopeComment = $scope.$parent.project.comments.filter(function(comment) {
+						return $scope.commenting === comment._id;
+					});
+					commenting[0].nestedCommentInput = scopeComment[0].nestedCommentInput;
+					commenting[0].commenting = true;
+				}
+
+				$scope.$parent.project = new Projects(data);
+
+				// angular.forEach($scope.$parent.project.comments, function(comment, val) {
+				// 	comment.userPic = comment.user.providerData.profile_image_url_https;
+				// 	angular.forEach(comment.comments, function(comment, val) {
+				// 		comment.userPic = comment.user.providerData.profile_image_url_https;
+				// 	});
+				// });
+=======
+>>>>>>> 2c104527c07555c9b60797bb635a3fb128f06f7f
 			}
 
 			// If people are commenting, editing a comment, or viewing nested comments, keep their state.
@@ -190,7 +212,7 @@ angular.module('core')
 			// }
 
 			// $scope.$parent.project = new Projects(data);
-
+	
 			// angular.forEach($scope.$parent.project.comments, function(comment, val) {
 			// 	comment.userPic = comment.user.providerData.profile_image_url_https;
 			// 	angular.forEach(comment.comments, function(comment, val) {

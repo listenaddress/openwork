@@ -130,3 +130,8 @@
 .createNote {
 	margin-bottom: 20px;
 }
+
+.ta-scroll-window {
+	min-height: 30px;
+	height: auto;
+}

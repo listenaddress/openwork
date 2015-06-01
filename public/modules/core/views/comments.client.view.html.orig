@@ -1,0 +1,72 @@
+<!-- Comments -->
+<div ng-controller="CommentsController" class="comments">
+    <!-- ng-repeat obj in commentings -->
+    <div data-ng-repeat="obj in obj | orderBy:'created'" class="comment" ng-mouseenter="obj.hovering = true" ng-mouseleave="obj.hovering = false">
+        <!-- Comment user picture -->
+        <img class="userPicture" ng-src="{{obj.user.providerData.profile_image_url_https}}">
+        <!-- Comment user username -->
+        <a href="http://www.twitter.com/{{obj.user}}" target="_blank">
+            <span class="username commentUsername">{{obj.user.username}}</span>
+        </a>
+        <!-- Comment time -->
+        <span class="commentTime">{{obj.momentDate}}</span>
+
+        <!-- Edit button -->
+        <img class="editButton" src="/modules/core/img/edit.png" ng-if="obj.hovering && authentication.user._id === obj.user._id" ng-hide="obj.editing" ng-click="startEditing()">
+
+        <!-- Comment bubble -->
+        <div ng-show="obj.comments">
+            <img class="commentBubble" src="/modules/core/img/comment.png" ng-click="toggleCommenting()">
+            <span class="commentNumber" ng-class="{ 'tenPlusComments': obj.comments.length > 9 }">{{obj.comments.length}}</span>
+        </div>
+
+        <div>
+            <img class="commentBubble" src="/modules/core/img/comment.png" ng-click="toggleCommenting()">
+            <span class="commentNumber" ng-hide="obj.comments">+</span>
+        </div>
+
+
+        <!-- Comment text -->
+        <div class="commentText" ng-hide="obj.editing">{{obj.text}}</div>
+        <!-- Editing comment text -->
+        <div ng-show="obj.editing">
+            <input class="form-control" ng-model="obj.commentEdit">
+            <a class="btn btn-default" class="btn btn-default" ng-click="saveCommentEdit()">save</a>
+            <a class="btn btn-default" class="btn btn-default"ng-click="cancelEdit()">cancel</a>
+            <a class="btn btn-default" ng-click="removeComment()">delete</a>
+        </div>
+
+        <!-- Nested comments -->
+        <div ng-show="obj.commenting">
+            <div class="nestedComment" ng-repeat="obj in obj.comments" ng-mouseenter="obj.hovering = true" ng-mouseleave="obj.hovering = false">
+                <img class="smallUserPicture" ng-src="{{obj.user.providerData.profile_image_url_https}}"/>
+                <a href="http://www.twitter.com/{{obj.user.username}}" <span class="username commentUsername">{{obj.user.username}}</span></a>
+                <!-- Comment time -->
+                <span class="commentTime">{{obj.momentDate}}</span>
+                <img class="editButton" src="/modules/core/img/edit.png" ng-if="obj.hovering && authentication.user._id === obj.user._id" ng-hide="obj.editing" ng-click="startEditing()">
+                <div class="nestedCommentText" ng-hide="obj.editing">{{obj.text}}</div>
+                <div ng-show="obj.editing">
+<<<<<<< HEAD
+                    <input class="form-control commentEdit" ng-model="obj.commentEdit">
+                    <div text-angular ng-model="htmlVariable"></div>
+
+                    <button  class="btn btn-default" ng-click="saveCommentEdit()">save</button>
+                    <button  class="btn btn-default" ng-click="cancelEdit()">cancel</button>
+                    <button  class="btn btn-default" ng-click="removeNestedComment()">delete</button>
+=======
+                    <textarea class="commentEdit" ng-model="obj.commentEdit"></textarea>
+                    <button class="btn btn-default" ng-click="saveCommentEdit()">save</button>
+                    <button class="btn btn-default" ng-click="cancelEdit()">cancel</button>
+                    <button class="btn btn-default" ng-click="removeNestedComment()">delete</button>
+>>>>>>> 2c104527c07555c9b60797bb635a3fb128f06f7f
+                </div>
+            </div>
+            <!-- Nested comment input -->
+            <input class="form-control" type="text" class="nestedCommentInput" ng-model="obj.nestedCommentInput">
+            <button  class="btn btn-default"  ng-click="addNestedComment()">add</button>
+        </div>
+    </div>
+
+    <input type="text"  class="form-control" ng-model="commentInput" />
+    <button  class="btn btn-default"  ng-click="addComment()">add comment</button>
+</div>
