@@ -1,0 +1,20 @@
+<section class="projectView" ng-controller="ProjectsController" ng-init="findNote()">
+	<!-- Name -->
+	<h1 data-ng-bind="project.name"></h1>
+	<!-- Navigation -->
+	<h4 class="nav">
+	    <a href="/#!/projects/{{project._id}}">overview</a>
+	    <a href="/#!/projects/{{project._id}}/notes">notes</a>
+	</h4>
+	<br>
+	<button class="btn btn-default" ng-click="previousNote()">previous</button>
+	<button class="btn btn-default" ng-click="nextNote()">next</button><br>
+
+	<a class="btn btn-default" href="/#!/projects/{{project._id}}/notes/{{note._id}}/edit" ng-show="authentication.user._id === project.user._id">edit</a>
+	<!-- 	Note title -->
+	<h1 ng-bind="note.title"></h1>
+	<!-- 	Note content -->
+	<div ng-bind="note.content" style="margin-bottom: 30px"></div>
+	<ow-comments obj="note.comments" project="project" note="note"></ow-comments>
+
+</section>

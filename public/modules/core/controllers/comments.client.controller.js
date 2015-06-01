@@ -11,6 +11,8 @@ angular.module('core')
 		$scope.toggleCommenting = function() {
 			if (this.obj.commenting) {
 				this.obj.commenting = false;
+				$scope.commenting = false;
+				$scope.nestedCommentInput = false;
 			} else {
 				this.obj.commenting = true;
 				$scope.commenting = this.obj._id;
@@ -19,6 +21,7 @@ angular.module('core')
 			}
 		};
 
+		// maybe set a watcher to obj.commentEdit?
 		$scope.startEditing = function() {
 			this.obj.editing = true;
 			this.obj.commentEdit = this.obj.text;
@@ -66,7 +69,7 @@ angular.module('core')
 				project.updatedChat = true;
 				projectsObj.update(project)
 					.then(function(result) {
-						console.log(project);
+						$scope.commentInput = '';
 					});
 			}
 		};
@@ -152,52 +155,64 @@ angular.module('core')
 
 		$scope.cancelEdit = function() {
 			this.obj.editing = false;
+			$scope.editing = false;
 		};
 
 		mySocket.on('updated project', function(data) {
 			console.log(data);
 			console.log($scope.commenting);
 			var project = new Projects(data);
+			var obj;
+
+			if (($scope.$parent.project) && ($scope.$parent.project._id === data._id)) {
+				console.log('looking at a note');
+
+			}
 
 			// If people are commenting, editing a comment, or viewing nested comments, keep their state.
-			if (($scope.$parent.project) && ($scope.$parent.project._id === data._id)) {
+			// if (($scope.$parent.project) && ($scope.$parent.project._id === data._id)) {
 
-				if ($scope.commenting) {
-					var commenting = project.comments.filter(function(comment) {
-						return $scope.commenting === comment._id;
-					});
-					var scopeComment = $scope.$parent.project.comments.filter(function(comment) {
-						return $scope.commenting === comment._id;
-					});
-					commenting[0].nestedCommentInput = scopeComment[0].nestedCommentInput;
-					commenting[0].commenting = true;
-				}
+			// }
 
-				$scope.$parent.project = new Projects(data);
+			// if (($scope.$parent.note) && ($scope.$parent.note._id === data.updatedNote)) {
 
-				// angular.forEach($scope.$parent.project.comments, function(comment, val) {
-				// 	comment.userPic = comment.user.providerData.profile_image_url_https;
-				// 	angular.forEach(comment.comments, function(comment, val) {
-				// 		comment.userPic = comment.user.providerData.profile_image_url_https;
-				// 	});
-				// });
-			}
+			// }
+
+			// if ($scope.commenting) {
+			// 	var commenting = project.comments.filter(function(comment) {
+			// 		return $scope.commenting === comment._id;
+			// 	});
+			// 	var scopeComment = $scope.$parent.project.comments.filter(function(comment) {
+			// 		return $scope.commenting === comment._id;
+			// 	});
+			// 	commenting[0].nestedCommentInput = scopeComment[0].nestedCommentInput;
+			// 	commenting[0].commenting = true;
+			// }
+
+			// $scope.$parent.project = new Projects(data);
+	
+			// angular.forEach($scope.$parent.project.comments, function(comment, val) {
+			// 	comment.userPic = comment.user.providerData.profile_image_url_https;
+			// 	angular.forEach(comment.comments, function(comment, val) {
+			// 		comment.userPic = comment.user.providerData.profile_image_url_https;
+			// 	});
+			// });
 
 
-			if ($scope.editing) {
-				console.log($scope.editing);
-				var editingObj = $scope.$parent.project.comments.filter(function(comment) {
-					return $scope.editing === comment._id;
-				});
-				console.log(editingObj[0]);
-				var newEditingObj = project.comments.filter(function(comment) {
-					return $scope.editing === comment._id;
-				});
-				newEditingObj[0].editing = true;
-				console.log(newEditingObj[0]);
-				console.log($scope.commentInput);
-				newEditingObj[0].commentInput = editingObj[0].commentInput;
-			}
+			// if ($scope.editing) {
+			// 	console.log($scope.editing);
+			// 	var editingObj = $scope.$parent.project.comments.filter(function(comment) {
+			// 		return $scope.editing === comment._id;
+			// 	});
+			// 	console.log(editingObj[0]);
+			// 	var newEditingObj = project.comments.filter(function(comment) {
+			// 		return $scope.editing === comment._id;
+			// 	});
+			// 	newEditingObj[0].editing = true;
+			// 	console.log(newEditingObj[0]);
+			// 	console.log($scope.commentInput);
+			// 	newEditingObj[0].commentInput = editingObj[0].commentInput;
+			// }
 
 			// if (($scope.$parent.note) && ($scope.$parent.note._id === data.updatedNote)) {
 			// 	console.log('in here too');
