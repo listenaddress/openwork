@@ -39,8 +39,11 @@ angular.module('projects')
 			var parentComment = project.parentComment;
 
 			var projectObj = new Projects(project);
+			console.log(projectObj);
+			console.log(project);
 
-			projectObj.$update(function() {
+			projectObj.$update(function(response) {
+				console.log(response);
 				// if (updatedNote) {
 				// 	project.updatedNote = updatedNote;
 				// } else if (newNote) {

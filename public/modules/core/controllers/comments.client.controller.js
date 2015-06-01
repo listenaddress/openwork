@@ -17,7 +17,6 @@ angular.module('core')
 				this.obj.commenting = true;
 				$scope.commenting = this.obj._id;
 				$scope.nestedCommentInput = this.nestedCommentInput;
-				console.log(this.obj.nestedCommentInput);
 			}
 		};
 
@@ -159,14 +158,56 @@ angular.module('core')
 		};
 
 		mySocket.on('updated project', function(data) {
-			console.log(data);
-			console.log($scope.commenting);
-			var project = new Projects(data);
-			var obj;
+			var project = new Projects(data),
+				obj,
+				viewing;
 
-			if (($scope.$parent.project) && ($scope.$parent.project._id === data._id)) {
-				console.log('looking at a note');
+			if ($scope.note) {
+				viewing = 'note';
+				obj = $scope.note.comments;
+			} else if (($scope.$parent.project) && ($scope.$parent.project._id === data._id)) {
+				viewing = 'project';
+				obj = $scope.$parent.project.comments;
+			}
 
+			if ($scope.commenting) {
+				var commenting = obj.filter(function(comment) {
+					return $scope.commenting === comment._id;
+				});
+
+				if (viewing === 'note') {
+					var commentingNote = data.notes.filter(function(note) {
+						return $scope.note._id === note._id;
+					});
+
+					var newNoteCommentingObj = commentingNote[0].comments.filter(function(comment) {
+						return $scope.commenting === comment._id;
+					});
+
+
+					console.log(newNoteCommentingObj);
+					console.log(commentingNote);
+					newNoteCommentingObj[0].commenting = true;
+					newNoteCommentingObj[0].nestedCommentInput = commenting[0].nestedCommentInput;
+
+				} else if (viewing === 'project') {
+					var newProjectCommentingObj = data.comments.filter(function(comment) {
+						return $scope.commenting === comment._id;
+					});
+
+					console.log($scope.commenting);
+					console.log(data.comments);
+					console.log('viewing project');
+					newProjectCommentingObj[0].commenting = true;
+					newProjectCommentingObj[0].nestedCommentInput = commenting[0].nestedCommentInput;
+				}
+
+				// commenting[0].nestedCommentInput = scopeComment[0].nestedCommentInput;
+
+			}
+
+			if ($scope.editing) {
+				console.log($scope.editing);
 			}
 
 			// If people are commenting, editing a comment, or viewing nested comments, keep their state.
@@ -189,7 +230,10 @@ angular.module('core')
 			// 	commenting[0].commenting = true;
 			// }
 
-			// $scope.$parent.project = new Projects(data);
+			$scope.$parent.project = new Projects(data);
+			$scope.project = new Projects(data);
+
+			console.log(data);
 	
 			// angular.forEach($scope.$parent.project.comments, function(comment, val) {
 			// 	comment.userPic = comment.user.providerData.profile_image_url_https;

@@ -86,7 +86,10 @@ var ProjectSchema = new Schema({
 		ref: 'User'
 	},
 	notes: [NoteSchema],
-	comments: [CommentSchema]
+	comments: [CommentSchema],
+	updatedNote: {
+		type: String
+	}
 });
 
 mongoose.model('Project', ProjectSchema);

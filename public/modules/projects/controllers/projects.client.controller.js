@@ -151,9 +151,9 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 
 		// Socket logic
 		mySocket.on('updated project', function(data) {
-			if($stateParams.projectId === data._id) {
-				$scope.project = data;
-			}
+			// if($stateParams.projectId === data._id) {
+			// 	$scope.project = data;
+			// }
 		});
 
 	}

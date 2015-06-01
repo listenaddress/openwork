@@ -39,6 +39,9 @@ exports.read = function(req, res) {
 exports.update = function(req, res) {
 	var project = req.project ;
 	project = _.extend(project , req.body);
+	console.log(req.body.updatedNote);
+	project.updatedNote = req.body.updatedNote;
+	console.log(project.updatedNote);
 
 	project.save(function(err) {
 		if (err) {
