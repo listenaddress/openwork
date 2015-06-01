@@ -43,13 +43,13 @@
                 <a href="http://www.twitter.com/{{obj.user.username}}" <span class="username commentUsername">{{obj.user.username}}</span></a>
                 <!-- Comment time -->
                 <span class="commentTime">{{obj.momentDate}}</span>
-                <img class="editButton" src="/modules/core/img/edit.png" ng-show="authentication.user._id === obj.user._id" ng-if="obj.hovering" ng-hide="obj.editing" ng-click="startEditing()">
+                <img class="editButton" src="/modules/core/img/edit.png" ng-if="obj.hovering && authentication.user._id === obj.user._id" ng-hide="obj.editing" ng-click="startEditing()">
                 <div class="nestedCommentText" ng-hide="obj.editing">{{obj.text}}</div>
                 <div ng-show="obj.editing">
                     <textarea class="commentEdit" ng-model="obj.commentEdit"></textarea>
-                    <button  class="btn btn-default" ng-click="saveCommentEdit()">save</button>
-                    <button  class="btn btn-default" ng-click="cancelEdit()">cancel</button>
-                    <button  class="btn btn-default" ng-click="removeNestedComment()">delete</button>
+                    <button class="btn btn-default" ng-click="saveCommentEdit()">save</button>
+                    <button class="btn btn-default" ng-click="cancelEdit()">cancel</button>
+                    <button class="btn btn-default" ng-click="removeNestedComment()">delete</button>
                 </div>
             </div>
             <!-- Nested comment input -->

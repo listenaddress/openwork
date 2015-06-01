@@ -38,10 +38,9 @@ angular.module('projects')
 			var updatedChat = project.updatedChat;
 			var parentComment = project.parentComment;
 
-			var testObj = new Projects(project);
+			var projectObj = new Projects(project);
 
-			testObj.$update(function() {
-				console.log(testObj);
+			projectObj.$update(function() {
 				// if (updatedNote) {
 				// 	project.updatedNote = updatedNote;
 				// } else if (newNote) {
@@ -54,8 +53,8 @@ angular.module('projects')
 				// 	$location.path('projects/' + project._id);
 				// }
 				// $location.path('projects/' + project._id);
-				mySocket.emit('project updated', testObj);
-				updateDefer.resolve();
+				mySocket.emit('project updated', projectObj);
+				updateDefer.resolve(projectObj);
 			}, function(errorResponse) {
 				updateDefer.reject(errorResponse.data.message);
 			});
@@ -100,16 +99,16 @@ angular.module('projects')
 					});
 
 					project.note = theNote[0];
-					angular.forEach(project.note.comments, function(comment, key) {
-						comment.userPic = comment.user.providerData.profile_image_url_https;
-						angular.forEach(comment.comments, function(comment, key) {
-							comment.userPic = comment.user.providerData.profile_image_url_https;
-						});
-						if ((key + 1) === project.note.comments.length) {
-							findDefer.resolve(project);
-						}
-					});
-					momentCreator.momentify(project.note.comments);
+					// angular.forEach(project.note.comments, function(comment, key) {
+					// 	comment.userPic = comment.user.providerData.profile_image_url_https;
+					// 	angular.forEach(comment.comments, function(comment, key) {
+					// 		comment.userPic = comment.user.providerData.profile_image_url_https;
+					// 	});
+					// 	if ((key + 1) === project.note.comments.length) {
+					// 		findDefer.resolve(project);
+					// 	}
+					// });
+					// momentCreator.momentify(project.note.comments);
 
 					findDefer.resolve(project);
 				} else {

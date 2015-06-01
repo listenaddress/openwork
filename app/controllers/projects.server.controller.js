@@ -97,6 +97,8 @@ exports.projectByID = function(req, res, next, id) {
 	Project.findById(id)
 		.populate('user', 'displayName')
 		.populate('user', 'username providerData.profile_image_url_https')
+		.populate('notes.comments.user', 'username providerData.profile_image_url_https')
+		.populate('notes.comments.comments.user', 'username providerData.profile_image_url_https')
 		.populate('comments.user', 'username providerData.profile_image_url_https')
 		.populate('comments.comments.user', 'username providerData.profile_image_url_https')
 		.exec(function(err, project) {

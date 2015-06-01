@@ -12,12 +12,9 @@
 		</a>
 	</div>
 	<div style="margin-bottom: 30px">
-		<em class="text-muted">
-			Posted on
-			<span data-ng-bind="project.created | date:'mediumDate'"></span>
-			by
-			<span data-ng-bind="project.user.displayName"></span>
-		</em>
+		Started on <span data-ng-bind="project.created | date:'mediumDate'"></span>	
 	</div>
+	<a href="/#!/projects/{{project._id}}/notes"><h4>Notes {{ project.notes.length }}</h4></a>
+	<a class="createNote btn btn-default" href="/#!/projects/{{project._id}}/notes/create">create note</a>
 	<ow-comments obj="project.comments" project="project"></ow-comments>
 </section>
