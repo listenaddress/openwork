@@ -41,7 +41,7 @@ angular.module('core')
 					});
 					console.log(note);
 					console.log(project.notes);
-					
+
 					// var noteIndex = project.notes.indexOf(note);
 					// console.log(noteIndex);
 					// if (!project.notes[noteIndex].comments) {
@@ -103,7 +103,7 @@ angular.module('core')
 					}
 				}
 			 });
-			
+
 		};
 
 		$scope.addNestedComment = function() {
@@ -130,7 +130,7 @@ angular.module('core')
 			this.$parent.obj.comments.splice(index, 1);
 			if (!$stateParams.noteId) {
 				$scope.project.updatedChat = true;
-			} 
+			}
 			projectsObj.update($scope.project)
 				.then(function(result) {
 					// $scope.project = result;
@@ -174,7 +174,7 @@ angular.module('core')
 				}
 
 				$scope.$parent.project = new Projects(data);
-		
+
 				// angular.forEach($scope.$parent.project.comments, function(comment, val) {
 				// 	comment.userPic = comment.user.providerData.profile_image_url_https;
 				// 	angular.forEach(comment.comments, function(comment, val) {
