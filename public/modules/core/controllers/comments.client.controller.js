@@ -17,7 +17,6 @@ angular.module('core')
 				this.obj.commenting = true;
 				$scope.commenting = this.obj._id;
 				$scope.nestedCommentInput = this.nestedCommentInput;
-				console.log(this.obj.nestedCommentInput);
 			}
 		};
 
@@ -26,7 +25,11 @@ angular.module('core')
 			this.obj.editing = true;
 			this.obj.commentEdit = this.obj.text;
 			$scope.editing = this.obj._id;
-			$scope.commentEdit = this.obj.commentEdit;
+		};
+
+		$scope.startNestedEditing = function() {
+			this.obj.editing = true;
+			this.obj.commentEdit = this.obj.text;
 		};
 
 		$scope.addComment = function() {
@@ -43,8 +46,7 @@ angular.module('core')
 						user: Authentication.user._id
 					});
 					console.log(note);
-					console.log(project.notes);
-
+					
 					// var noteIndex = project.notes.indexOf(note);
 					// console.log(noteIndex);
 					// if (!project.notes[noteIndex].comments) {
@@ -56,6 +58,7 @@ angular.module('core')
 					// });
 					project.updatedNote = $stateParams.noteId;
 					projectsObj.update(project);
+					console.log(project);
 				}
 
 			} else {
@@ -134,6 +137,7 @@ angular.module('core')
 			if (!$stateParams.noteId) {
 				$scope.project.updatedChat = true;
 			}
+			$scope.editing = false;
 			projectsObj.update($scope.project)
 				.then(function(result) {
 					// $scope.project = result;
@@ -180,14 +184,9 @@ angular.module('core')
 					var commentingNote = data.notes.filter(function(note) {
 						return $scope.note._id === note._id;
 					});
-
 					var newNoteCommentingObj = commentingNote[0].comments.filter(function(comment) {
 						return $scope.commenting === comment._id;
 					});
-
-
-					console.log(newNoteCommentingObj);
-					console.log(commentingNote);
 					newNoteCommentingObj[0].commenting = true;
 					newNoteCommentingObj[0].nestedCommentInput = commenting[0].nestedCommentInput;
 
@@ -195,20 +194,36 @@ angular.module('core')
 					var newProjectCommentingObj = data.comments.filter(function(comment) {
 						return $scope.commenting === comment._id;
 					});
-
-					console.log($scope.commenting);
-					console.log(data.comments);
-					console.log('viewing project');
 					newProjectCommentingObj[0].commenting = true;
 					newProjectCommentingObj[0].nestedCommentInput = commenting[0].nestedCommentInput;
 				}
 
-				// commenting[0].nestedCommentInput = scopeComment[0].nestedCommentInput;
-
 			}
 
 			if ($scope.editing) {
-				console.log($scope.editing);
+				if (viewing === 'note') {
+					var editingNoteObj = $scope.note.comments.filter(function(comment) {
+						return $scope.editing === comment._id;
+					});
+					var note = project.notes.filter(function(projectNote) {
+						return $scope.note._id === projectNote._id;
+					});
+					console.log(note);
+					var newEditingNoteObj = note[0].comments.filter(function(comment) {
+						return $scope.editing === comment._id;
+					});
+					newEditingNoteObj[0].editing = true;
+					newEditingNoteObj[0].commentEdit = editingNoteObj[0].commentEdit;
+				} else if (viewing === 'project') {
+					var editingObj = $scope.$parent.project.comments.filter(function(comment) {
+						return $scope.editing === comment._id;
+					});
+					var newEditingObj = project.comments.filter(function(comment) {
+						return $scope.editing === comment._id;
+					});
+					newEditingObj[0].editing = true;
+					newEditingObj[0].commentEdit = editingObj[0].commentEdit;
+				}
 			}
 
 			// If people are commenting, editing a comment, or viewing nested comments, keep their state.
@@ -231,8 +246,21 @@ angular.module('core')
 			// 	commenting[0].commenting = true;
 			// }
 
-			// $scope.$parent.project = new Projects(data);
+			$scope.$parent.project = new Projects(data);
 
+			console.log(data);
+
+			if ($stateParams.noteId === data.updatedNote) {
+				console.log('looking at updated note');
+				var newNote = data.notes.filter(function(note) {
+					return $stateParams.noteId === note._id;
+				});
+
+				console.log(newNote[0]);
+
+				$scope.$parent.note = newNote[0];
+			}
+	
 			// angular.forEach($scope.$parent.project.comments, function(comment, val) {
 			// 	comment.userPic = comment.user.providerData.profile_image_url_https;
 			// 	angular.forEach(comment.comments, function(comment, val) {
