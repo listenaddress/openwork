@@ -12,6 +12,8 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 				description: this.description
 			});
 
+			console.log(project);
+
 			projectsObj.create(project)
 				.then(function(result) {
 					return;

@@ -14,7 +14,7 @@
 	<!-- 	Note title -->
 	<h1 ng-bind="note.title"></h1>
 	<!-- 	Note content -->
-	<div ng-bind="note.content" style="margin-bottom: 30px"></div>
+	<div ta-bind ng-model="note.content"></div>
 	<ow-comments obj="note.comments" project="project" note="note"></ow-comments>
 
 </section>

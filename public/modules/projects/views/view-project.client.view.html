@@ -1,7 +1,7 @@
 <section data-ng-controller="ProjectsController" data-ng-init="findOne()">
 	<div class="page-header">
 		<h1 data-ng-bind="project.name"></h1>
-		<div data-ng-bind="project.description"></div>
+		<div ta-bind ng-model="project.description"></div>
 	</div>
 	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == project.user._id))">
 		<a class="btn btn-primary" href="/#!/projects/{{project._id}}/edit">
