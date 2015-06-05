@@ -22,6 +22,7 @@ exports.create = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+			project.actionType = 1;
 			activityHandler.create(project);
 			res.jsonp(project);
 		}
