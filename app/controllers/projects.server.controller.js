@@ -6,6 +6,7 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
 	Project = mongoose.model('Project'),
+	activityHandler = require('./activity.server.controller'),
 	_ = require('lodash');
 
 /**
@@ -21,6 +22,7 @@ exports.create = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+			activityHandler.create(project);
 			res.jsonp(project);
 		}
 	});
