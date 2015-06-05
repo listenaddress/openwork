@@ -86,19 +86,22 @@
 }
 
 .commentInput {
-	border: none;
 	background-color: none;
-	outline: none;
 	resize: none;
 	margin-left: 5px;
 	width: 80%;
+}
+
+.commentInput:focus {
+	outline: none;
+	border: none;
 }
 
 .commentBubble {
 	height: 25px;
 	z-index: 2;
 	position: absolute;
-	right: 0px;
+	right: .01px;
 	top: 23px;
 }
 
