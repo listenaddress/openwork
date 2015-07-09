@@ -35,18 +35,15 @@ angular.module('projects')
 			var updatePromise = updateDefer.promise;
 			var updatedNote = project.updatedNote;
 			var newNote = project.newNote;
-			var updatedChat = project.updatedChat;
 			var parentComment = project.parentComment;
-
 			var projectObj = new Projects(project);
-			console.log(projectObj);
-			console.log(project);
+			projectObj.projectComment = project.projectComment;
 
 			projectObj.$update(function(response) {
 				console.log(response);
-				// if (updatedNote) {
-				// 	project.updatedNote = updatedNote;
-				// } else if (newNote) {
+				if (updatedNote) {
+					project.updatedNote = updatedNote;
+				} 
 				// 	$location.path('projects/' + project._id + '/notes/' + project.notes[(project.notes.length - 1)]._id);
 				// } else if (updatedChat) {
 				// 	$location.path('projects/' + project._id + '/chat');

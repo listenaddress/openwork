@@ -87,6 +87,10 @@ var ProjectSchema = new Schema({
 	},
 	notes: [NoteSchema],
 	comments: [CommentSchema],
+	followers: [{
+		type: Schema.ObjectId,
+		ref: 'User'
+	}],
 	updatedNote: {
 		type: String
 	}

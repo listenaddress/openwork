@@ -12,8 +12,6 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 				description: this.description
 			});
 
-			console.log(project);
-
 			projectsObj.create(project)
 				.then(function(result) {
 					return;
@@ -32,6 +30,13 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 				}, function(reason) {
 					$scope.error = reason;
 				});
+		};
+
+		$scope.followProject = function() {
+			var project = $scope.project;
+			project.followProject = true;
+
+			Projects.update(project);
 		};
 
 		// Remove existing Project
@@ -71,11 +76,11 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 				content: $scope.noteContent,
 				user: Authentication.user._id
 			};
-			project.notes.push(newNote);
-			project.newNote = true;
+			// project.notes.push(newNote);
+			project.newNote = newNote;
 			projectsObj.update(project)
 				.then(function(result) {
-					$location.path('projects/' + result._id + '/notes/' + result.notes[project.notes.length - 1]._id);
+					$location.path('projects/' + result._id + '/notes/' + result.newNote._id);
 				}, function(reason) {
 					$scope.error = reason;
 					console.log($scope.error);

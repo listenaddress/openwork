@@ -62,14 +62,11 @@ angular.module('core')
 				}
 
 			} else {
-				if (!project.comments) {
-					project.comments = [];
-				}
-				project.comments.push({
+				project.projectComment = {
 					text: $scope.commentInput,
 					user: Authentication.user._id
-				});
-				project.updatedChat = true;
+				};
+				console.log(project);
 				projectsObj.update(project)
 					.then(function(result) {
 						$scope.commentInput = '';

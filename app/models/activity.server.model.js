@@ -9,6 +9,9 @@ var ActivitySchema = new Schema({
 	activityType: {
 		type: Number
 	},
+	activityString: {
+		type: String
+	},
 	projectId: {
 		type: Schema.ObjectId,
 		ref: 'Project'
@@ -21,6 +24,10 @@ var ActivitySchema = new Schema({
 	},
 	nestedCommentId: {
 		type: String
+	},
+	created: {
+		type: Date,
+		default: Date.now
 	}
 });
 

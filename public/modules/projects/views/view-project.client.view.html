@@ -14,6 +14,7 @@
 	<div style="margin-bottom: 30px">
 		Started on <span data-ng-bind="project.created | date:'mediumDate'"></span>	
 	</div>
+	<div class="btn btn-default" ng-click="followProject()">follow {{ project.followers.length }}</div>
 	<a href="/#!/projects/{{project._id}}/notes"><h4>Notes {{ project.notes.length }}</h4></a>
 	<a class="createNote btn btn-default" href="/#!/projects/{{project._id}}/notes/create">create note</a>
 	<ow-comments obj="project.comments" project="project"></ow-comments>
