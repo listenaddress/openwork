@@ -1,0 +1,30 @@
+We're building a public space to organize, share, and collaborate on any project. Somewhere to see what others are working on and the projects they contribute to, and then be able to jump in and collaborate instantly.
+
+Right now we're prototyping in keynote and developing the app with MEANJS.
+
+##Prototype
+
+Open in keynote and go ⌥⌘P to make it full screen. Most things you'd expect to be able to click on work, otherwise you can use the arrow keys to cruise through the slides. 
+
+##App
+
+We're developing the basic infastructure for a mean stack app.
+To run the app, cd into the app and run `npm install`. Then run `grunt`. The app will run on localhost:3000.
+
+The data structure:
+User objects store projects, activity around the site, and who/what the user is following 
+users
+	projects
+		description
+		notes
+			comments
+		comments
+	activity
+	following
+
+all community activity saved with string, action type, users, and date
+activity
+	user
+	action type
+	string
+	date

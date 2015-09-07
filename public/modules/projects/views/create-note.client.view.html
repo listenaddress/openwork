@@ -1,0 +1,19 @@
+<!-- Create note -->
+<section class="projectView" ng-controller="ProjectsController" ng-init="findOne()">
+	<!-- Name -->
+	<h1 data-ng-bind="project.name"></h1>
+	<!-- Navigation -->
+	<h4 class="nav">
+	    <a href="/#!/projects/{{project._id}}">overview</a>
+	    <a href="/#!/projects/{{project._id}}/notes">notes</a>
+	</h4>
+	<br>
+	<!-- Create note -->
+	<h3>Create Note</h3>
+	Title
+	<textarea class="form-control" ng-model="noteTitle" placeholder="title"></textarea><br>
+	Note
+	<text-angular ng-model="noteContent" placeholder="note" ng-model="htmlVariable"></text-angular>
+
+	<button ng-click="publishNote()">publish note</button>
+</section>

@@ -1,0 +1,19 @@
+<section class="projectView" ng-controller="ProjectsController" ng-init="findOne()">
+	<!-- Name -->
+	<h1 data-ng-bind="project.name"></h1>
+	<!-- Navigation -->
+	<h4 class="nav">
+	    <a href="/#!/projects/{{project._id}}">overview</a>
+	    <a href="/#!/projects/{{project._id}}/notes">notes</a>
+	</h4>
+	<br>
+	<h2>Notes</h2>
+
+	<div ng-repeat="obj in project.notes">
+		<a ng-href="#!/projects/{{project._id}}/notes/{{obj._id}}" class="noteListTitle"><h3>{{obj.title}}</h3></a>
+		<span class="noteListCreated">{{obj.created}}</span>
+	</div>
+	<br>
+	<a class="createNote btn btn-default" href="/#!/projects/{{project._id}}/notes/create">create note</a>
+
+</section>

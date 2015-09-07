@@ -1,3 +1,5 @@
+
+
 .content {
 	margin-top: 50px;
 }
@@ -12,4 +14,127 @@
 }
 .ng-valid.ng-dirty {
 	border-color: #78FA89;
+}
+
+.comment {
+	margin-bottom: 15px;
+	position: relative;
+}
+
+.commentText {
+	position: relative;
+	left: 58px;
+	bottom: 13px;
+}
+
+.commentTime {
+	left: 5px;
+	bottom: 9px;
+	font-size: 11.5px;
+	position: relative;
+	color: #D3D3D3;
+}
+
+.trashCan {
+	width: 12.5px;
+	position: relative;
+	bottom: 12.5px;
+ 	left: 8px;
+}
+
+.tenPlusComments {
+	right: 4px;
+}
+
+.trashCan:hover {
+	cursor: pointer;
+}
+
+.editButton {
+	position: relative;
+	bottom: 16.5px;
+	left: 13px;
+	width: 17px;
+}
+
+.editButton:hover {
+	cursor: pointer;
+}
+
+.commentEdit {
+	position: relative;
+	bottom: 9px;
+	left: 57px;
+}
+
+.nestedComment {
+	margin-left: 57px;
+	margin-top: 11px;
+	font-size: 12.5px;
+}
+
+.nestedCommentText {
+	font-size: 12.5px;
+	position: relative;
+	bottom: 13px;
+	left: 48px;
+}
+
+.commentTrash {
+	bottom: 7px;
+	right: 8px;
+}
+
+.commentInput {
+	background-color: none;
+	resize: none;
+	margin-left: 5px;
+	width: 80%;
+}
+
+.commentInput:focus {
+	outline: none;
+	border: none;
+}
+
+.commentBubble {
+	height: 25px;
+	z-index: 2;
+	position: absolute;
+	right: .01px;
+	top: 23px;
+}
+
+.commentBubble:hover {
+	cursor: pointer;
+}
+
+.commentNumber {
+	font-size: 10px;
+	position: absolute;
+	right: 7px;
+	top: 26px;
+	color: black;
+	font-weight: 300;
+}
+
+.userPicture {
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+}
+
+.smallUserPicture {
+	border-radius: 50%;
+	width: 29px;
+	height: 29px;
+}
+
+.createNote {
+	margin-bottom: 20px;
+}
+
+.ta-scroll-window {
+	min-height: 30px;
+	height: auto;
 }

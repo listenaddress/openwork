@@ -24,7 +24,7 @@ exports.signup = function(req, res) {
 	user.provider = 'local';
 	user.displayName = user.firstName + ' ' + user.lastName;
 
-	// Then save the user 
+	// Then save the user
 	user.save(function(err) {
 		if (err) {
 			return res.status(400).send({
@@ -50,6 +50,7 @@ exports.signup = function(req, res) {
  * Signin after passport authentication
  */
 exports.signin = function(req, res, next) {
+
 	passport.authenticate('local', function(err, user, info) {
 		if (err || !user) {
 			res.status(400).send(info);
@@ -63,8 +64,10 @@ exports.signin = function(req, res, next) {
 					res.status(400).send(err);
 				} else {
 					res.json(user);
+					console.log(user);
 				}
 			});
+
 		}
 	})(req, res, next);
 };
