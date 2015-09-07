@@ -37,22 +37,8 @@ angular.module('projects')
 			var newNote = project.newNote;
 			var parentComment = project.parentComment;
 			var projectObj = new Projects(project);
-			projectObj.projectComment = project.projectComment;
 
 			projectObj.$update(function(response) {
-				console.log(response);
-				if (updatedNote) {
-					project.updatedNote = updatedNote;
-				} 
-				// 	$location.path('projects/' + project._id + '/notes/' + project.notes[(project.notes.length - 1)]._id);
-				// } else if (updatedChat) {
-				// 	$location.path('projects/' + project._id + '/chat');
-				// } else {
-				// 	console.log('in here');
-				// 	console.log(project._id);
-				// 	$location.path('projects/' + project._id);
-				// }
-				// $location.path('projects/' + project._id);
 				mySocket.emit('project updated', projectObj);
 				updateDefer.resolve(projectObj);
 			}, function(errorResponse) {
@@ -99,16 +85,6 @@ angular.module('projects')
 					});
 
 					project.note = theNote[0];
-					// angular.forEach(project.note.comments, function(comment, key) {
-					// 	comment.userPic = comment.user.providerData.profile_image_url_https;
-					// 	angular.forEach(comment.comments, function(comment, key) {
-					// 		comment.userPic = comment.user.providerData.profile_image_url_https;
-					// 	});
-					// 	if ((key + 1) === project.note.comments.length) {
-					// 		findDefer.resolve(project);
-					// 	}
-					// });
-					// momentCreator.momentify(project.note.comments);
 
 					findDefer.resolve(project);
 				} else {
